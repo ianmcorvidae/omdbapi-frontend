@@ -32,6 +32,8 @@ To start a web server for the application, run:
  * Build tools: this uses npm as a build tool as recommended by
    http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/, but something
    like Gulp or Grunt might be more practical.
+ * `location.hash` handling is rather rudimentary and could benefit from using
+   a proper library if made any more complex
 
 ## License
 

@@ -1,26 +1,6 @@
 var React = require('react');
 var $ = require('jquery');
 
-var SearchForm = React.createClass({
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var query = React.findDOMNode(this.refs.query).value.trim();
-    var year = React.findDOMNode(this.refs.year).value.trim();
-    if (!query) { return; }
-    this.props.onSubmit(query, year);
-    return;
-  },
-  render: function() {
-    return (
-      <form className="searchForm" onSubmit={this.handleSubmit}>
-        <input type="text" name="query" ref="query" placeholder="Movie Title" />
-        <input type="text" name="year" ref="year" placeholder="YYYY" />
-        <input type="submit" />
-      </form>
-    );
-  }
-});
-
 var SearchDetails = React.createClass({
   render: function() {
     var omdb = {};
@@ -88,9 +68,59 @@ var SearchResult = React.createClass({
       <tr>
         <td className="expand" title={this.state.expanded ? "Show Less" : "Show More"} onClick={this.handleClick}>{this.state.expanded ? '-' : '+'}</td>
         {firstCell}
-        <td className="year" key="year">{this.props.data[1]}</td>
-        <td className="imdb" key="imdb"><a href={"http://www.imdb.com/title/" + this.props.data[2]} target="_blank">{this.props.data[2]}</a></td>];
+        <td className="year">{this.props.data[1]}</td>
+        <td className="imdb"><a href={"http://www.imdb.com/title/" + this.props.data[2]} target="_blank">{this.props.data[2]}</a></td>
       </tr>
+    );
+  }
+});
+
+var SearchForm = React.createClass({
+  getInitialState: function() {
+    return {"query": this.props.initialQuery || "",
+            "year": this.props.initialYear || ""}
+  },
+  updateHashState: function() {
+    if (location.hash) {
+      var startQuery = location.hash.slice(1).split('/');
+      var query = decodeURIComponent(startQuery[0]);
+      var year = startQuery.length > 1 ? decodeURIComponent(startQuery[1]) : "";
+      this.setState({"query": query, "year": year});
+      this.runSubmit(query, year);
+    }
+  },
+  componentDidMount: function () {
+    window.addEventListener('hashchange', this.updateHashState, false);
+    this.updateHashState();
+  },
+  runSubmit: function(query, year) {
+    if (!query) { return; }
+    this.props.onSubmit(query, year);
+    return;
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var query = this.state.query.trim();
+    var year = this.state.year.trim();
+    location.hash = encodeURIComponent(query) + '/' + encodeURIComponent(year);
+    this.runSubmit(query, year);
+    return;
+  },
+  queryUpdate: function(e) {
+    var query = React.findDOMNode(this.refs.query).value;
+    this.setState({"query": query});
+  },
+  yearUpdate: function(e) {
+    var year = React.findDOMNode(this.refs.year).value;
+    this.setState({"year": year});
+  },
+  render: function() {
+    return (
+      <form className="searchForm" onSubmit={this.handleSubmit}>
+        <input type="text" name="query" ref="query" placeholder="Movie Title" onChange={this.queryUpdate} value={this.state.query} />
+        <input type="text" name="year" ref="year" placeholder="YYYY" onChange={this.yearUpdate} value={this.state.year} />
+        <input type="submit" />
+      </form>
     );
   }
 });

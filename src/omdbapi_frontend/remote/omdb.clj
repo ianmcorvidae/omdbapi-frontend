@@ -1,5 +1,6 @@
 (ns omdbapi-frontend.remote.omdb
-  (:require [omdbapi-frontend.remote.util :refer [json-request]]))
+  (:require [omdbapi-frontend.remote.util :refer [json-request]]
+            [omdbapi-frontend.util :refer [select-values]]))
 
 (defn- omdb-request
   "Request from the OMDB API given query params to include, returning a map."
@@ -26,7 +27,7 @@
 (defn- format-omdb-query
   "Reformat an OMDB Search API response for returning to the client."
   [response-map]
-  (->> (map #(select-keys % ["Title" "Year" "imdbID"]) (get response-map "Search"))
+  (->> (replace {"N/A" nil} (map #(select-values % ["Title" "Year" "imdbID"]) (get response-map "Search")))
        (wrap-key-missing response-map "Search")
        (wrap-response-failed response-map)
        (wrap-omdb)))
@@ -34,7 +35,7 @@
 (defn- format-omdb-details
   "Reformat an OMDB API response for returning to the client."
   [response-map]
-  (->> (select-keys response-map ["Title" "Year" "imdbID" "Rated" "Released" "Runtime" "Genre" "Director" "Writer" "Actors" "Plot" "Language" "Country" "Awards" "Poster"])
+  (->> (replace {"N/A" nil} (select-values response-map ["Title" "Year" "imdbID" "Rated" "Released" "Runtime" "Genre" "Director" "Writer" "Actors" "Plot" "Language" "Country" "Awards" "Poster"]))
        (wrap-key-missing response-map "imdbID")
        (wrap-response-failed response-map)
        (wrap-omdb)))

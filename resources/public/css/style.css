@@ -32,6 +32,14 @@ body {
   font-family: "Linux Biolinum", "linux_biolinum_oregular", sans-serif;
 }
 
+input.year {
+  width: 4em;
+}
+
+input.query {
+  width: 75%;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

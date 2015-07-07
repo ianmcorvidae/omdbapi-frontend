@@ -117,8 +117,8 @@ var SearchForm = React.createClass({
   render: function() {
     return (
       <form className="searchForm" onSubmit={this.handleSubmit}>
-        <input type="text" name="query" ref="query" placeholder="Movie Title" onChange={this.queryUpdate} value={this.state.query} />
-        <input type="text" name="year" ref="year" placeholder="YYYY" onChange={this.yearUpdate} value={this.state.year} />
+        <input type="text" name="query" className="query" ref="query" placeholder="Movie Title" onChange={this.queryUpdate} value={this.state.query} />
+        <input type="number" name="year" className="year" ref="year" placeholder="YYYY" onChange={this.yearUpdate} value={this.state.year} />
         <input type="submit" />
       </form>
     );

@@ -35,6 +35,7 @@ To start a web server for the application, run:
  * `location.hash` handling is rather rudimentary and could benefit from using
    a proper library if made any more complex
  * webfonts could probably be better-optimized
+ * styling is quite sparse; design takes more time than code for me!
 
 ## License
 

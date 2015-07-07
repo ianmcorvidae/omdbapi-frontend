@@ -11,16 +11,21 @@ table {
 tr:nth-child(even) {
   background-color: #EEEEEE;
 }
+tr:nth-child(odd) {
+  background-color: #FFFFFF;
+}
 
 th {
   border: 1px solid grey;
 }
-td {
+td, th {
   padding: 4px;
   text-align: center;
 }
+
 td.expand {
   width: 1em;
+  cursor: pointer;
 }
 td.title {
   text-align: left;
@@ -30,4 +35,19 @@ td.year {
 }
 td.imdb {
   width: 9em;
+}
+
+table.details th {
+  width: 160px;
+}
+td.poster {
+  width: 300px;
+}
+
+.loading {
+  background-image: url('/img/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 128px;
+  min-width: 128px;
 }

@@ -34,6 +34,7 @@ To start a web server for the application, run:
    like Gulp or Grunt might be more practical.
  * `location.hash` handling is rather rudimentary and could benefit from using
    a proper library if made any more complex
+ * webfonts could probably be better-optimized
 
 ## License
 

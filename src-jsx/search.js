@@ -1,3 +1,6 @@
+var React = require('react');
+var $ = require('jquery');
+
 var SearchForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
@@ -40,7 +43,6 @@ var SearchResult = React.createClass({
           data: {id: this.props.data[2]},
           type: 'GET',
           success: function(data) {
-            console.log(data);
             this.setState({expandedData: data});
           }.bind(this),
           error: function(xhr, status, err) {
@@ -75,7 +77,6 @@ var SearchBox = React.createClass({
       data: {q: query, y: year},
       type: 'GET',
       success: function(data) {
-        console.log(data);
         this.setState({results: data.omdb});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -84,21 +85,23 @@ var SearchBox = React.createClass({
     });
   },
   render: function() {
-    var table;
+    var results;
     var detailsUrl = this.props.detailsUrl;
-    if (this.state.results.length > 0) {
+    if (this.state.results && this.state.results.length > 0) {
       var rows = this.state.results.map(function (r) { return (<SearchResult data={r} url={detailsUrl} />); });
-      table = (
+      results = (
           <table>
             <thead><tr><th></th><th>Title</th><th>Year</th><th>IMDB ID</th></tr></thead>
             <tbody>{rows}</tbody>
           </table>
       );
+    } else if (this.state.results === null) {
+      results = (<p>No results found, or server error. Please try again.</p>);
     }
     return (
       <div>
         <SearchForm onSubmit={this.handleSearchSubmit} />
-        {table}
+        {results}
       </div>
     );
   }

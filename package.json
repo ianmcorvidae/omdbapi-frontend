@@ -1,0 +1,21 @@
+{
+  "name": "omdbapi-frontend",
+  "version": "0.0.0",
+  "description": "package.json for keeping track of omdbapi-frontend nodejs dependencies",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ianmcorvidae/omdbapi-frontend.git"
+  },
+  "license": "WTFPL",
+  "dependencies": {
+    "browserify": "10.2.4",
+    "reactify": "1.1.1",
+    "uglifyjs": "2.4.10",
+    "react": "0.13.3",
+    "jquery": "2.1.1"
+  },
+  "scripts" : {
+    "js": "./node_modules/browserify/bin/cmd.js -t reactify src-jsx/* | ./node_modules/uglifyjs/bin/uglifyjs > resources/public/js/search.js"
+  },
+  "private": true
+}

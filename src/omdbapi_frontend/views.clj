@@ -10,13 +10,12 @@
   (html5
     [:head
       [:title "OMDB API Search"]
-      (include-css "/css/style.css")
-      (include-js "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js" "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js" "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
-      [:script {:type "text/jsx" :src "/jsx/search.jsx"}]]
+      (include-css "/css/style.css")]
     [:body
       [:h2 "Search OMDB"]
       [:p "Use this page to search the " [:a {:href "http://www.omdbapi.com"} "OMDB API"] " for movies."]
-      [:div {:id "content"}]]))
+      [:div {:id "content"}]
+      (include-js "/js/search.js")]))
 
 ; API views
 (defn- json-view

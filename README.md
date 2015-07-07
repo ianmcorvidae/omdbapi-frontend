@@ -1,8 +1,10 @@
 # omdbapi-frontend
 
-A basic interface for accessing the API provided by http://www.omdbapi.com and displaying related information.
+A basic interface for accessing the API provided by http://www.omdbapi.com and
+displaying related information.
 
-This is primarily a toy project. It's also my first Clojure project outside of toying around in a REPL; be gentle.
+This is primarily a toy project. It's also my first Clojure project outside of
+toying around in a REPL; be gentle.
 
 ## Prerequisites
 
@@ -11,13 +13,25 @@ You will need [Leiningen][] 2.0.0 or above installed.
 [leiningen]: https://github.com/technomancy/leiningen
 
 Using standard processes it should be possible to install the other
-dependencies using leiningen.
+dependencies using leiningen via `lein deps`.
+
+You will also need npm, the node package manager, if you'd like to change any
+jsx code; precompiled versions are provided for convenience.  Install
+dependencies with `npm install` and build javascript with `npm run js`.
 
 ## Running
 
 To start a web server for the application, run:
 
     lein ring server
+
+## Known Imperfections
+
+ * Compiled JS is checked into the repository. Probably better otherwise, but
+   this seems a lot nicer for running quickly for Clojure users.
+ * Build tools: this uses npm as a build tool as recommended by
+   http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/, but something
+   like Gulp or Grunt might be more practical.
 
 ## License
 

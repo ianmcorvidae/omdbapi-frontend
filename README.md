@@ -36,6 +36,7 @@ To start a web server for the application, run:
    a proper library if made any more complex
  * webfonts could probably be better-optimized
  * styling is quite sparse; design takes more time than code for me!
+ * the memcached server is hardcoded and should instead be configurable
 
 ## License
 

@@ -16,7 +16,7 @@
   [expire-time prefix f]
   (if-let [mc (memcached/text-connection "localhost:11211")]
     (fn [arg]
-      (if-let [mc-val (memcached/get mc (str prefix ":" arg))]
+      (if-let [mc-val (try (memcached/get mc (str prefix ":" arg)) (catch net.spy.memcached.OperationTimeoutException e nil))]
               (json/read-str mc-val)
               (let [new-val (f arg)
                     _ (memcached/set mc (str prefix ":" arg) expire-time (json/write-str new-val))]

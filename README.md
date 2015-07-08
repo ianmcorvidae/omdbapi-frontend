@@ -19,11 +19,20 @@ You will also need npm, the node package manager, if you'd like to change any
 jsx code; precompiled versions are provided for convenience.  Install
 dependencies with `npm install` and build javascript with `npm run js`.
 
+If you'd like caching to exist, you should install memcached, but the program
+will work without it.
+
 ## Running
 
 To start a web server for the application, run:
 
     lein ring server
+
+To run tests, run:
+
+    MEMCACHED_SERVERS="" lein test
+
+(This also turns off the memcached caching, which is probably a good idea while running tests)
 
 ## Known Imperfections
 
@@ -36,7 +45,6 @@ To start a web server for the application, run:
    a proper library if made any more complex
  * webfonts could probably be better-optimized
  * styling is quite sparse; design takes more time than code for me!
- * the memcached server is hardcoded and should instead be configurable
 
 ## License
 

@@ -1,5 +1,5 @@
 (ns omdbapi-frontend.remote.omdb
-  (:require [omdbapi-frontend.remote.util :refer [json-request]]
+  (:require [omdbapi-frontend.remote.util :refer [json-request wrap-key-missing-in]]
             [omdbapi-frontend.util :refer [select-values]]))
 
 (defn- omdb-request
@@ -18,17 +18,11 @@
       nil
       cont))
 
-(defn- wrap-key-missing
-  [response-map test-key cont]
-  (if (= (get response-map test-key) nil)
-      nil
-      cont))
-
 (defn- format-omdb-query
   "Reformat an OMDB Search API response for returning to the client."
   [response-map]
   (->> (replace {"N/A" nil} (map #(select-values % ["Title" "Year" "imdbID"]) (get response-map "Search")))
-       (wrap-key-missing response-map "Search")
+       (wrap-key-missing-in response-map ["Search"])
        (wrap-response-failed response-map)
        (wrap-omdb)))
 
@@ -36,7 +30,7 @@
   "Reformat an OMDB API response for returning to the client."
   [response-map]
   (->> (replace {"N/A" nil} (select-values response-map ["Title" "Year" "imdbID" "Rated" "Released" "Runtime" "Genre" "Director" "Writer" "Actors" "Plot" "Language" "Country" "Awards" "Poster"]))
-       (wrap-key-missing response-map "imdbID")
+       (wrap-key-missing-in response-map ["imdbID"])
        (wrap-response-failed response-map)
        (wrap-omdb)))
 

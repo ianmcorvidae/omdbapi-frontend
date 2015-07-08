@@ -13,6 +13,13 @@ var SearchDetails = React.createClass({
           return <tr key={name}><th>{name}</th><td>{omdb[name]}</td></tr>;
         }
     });
+    if (this.props.data.wikidata) {
+        var wikilinks = this.props.data.wikidata.map(function (linkspec, idx, arr) {
+            var last = (idx === arr.length - 1);
+            return <span key={linkspec[0]}><a target="_blank" href={linkspec[1]}>{linkspec[0]}</a>{last ? "" : ", "}</span>;
+        }, this);
+        extraRows.push(<tr key="wiki"><th>Wikipedia</th><td>{wikilinks}</td></tr>);
+    }
     var nrows = extraRows.length + 3; // +3: Plot, Language/Country, plus this row itself
     var poster = omdb["Poster"] ? <tr><td className="poster" rowSpan={nrows}><img src={omdb["Poster"]} /></td></tr> : null;
 

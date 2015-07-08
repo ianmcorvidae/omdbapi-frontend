@@ -9,3 +9,9 @@
   [url & {:keys [params] :or {params {}}}]
   (json/read-str (:body
     (client/get url (conj params {:headers client-headers})))))
+
+(defn wrap-key-missing-in
+  [response-map test-key-vec cont]
+  (if (= (get-in response-map test-key-vec) nil)
+      nil
+      cont))

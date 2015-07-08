@@ -1,7 +1,8 @@
 (ns omdbapi-frontend.views
   (:require [ring.util.response :as r]
             [clojure.data.json :as json]
-            [omdbapi-frontend.remote.omdb :as omdb])
+            [omdbapi-frontend.remote.omdb :as omdb]
+            [omdbapi-frontend.remote.wikidata :as wikidata])
   (:use [hiccup core page]))
 
 ; Frontend views
@@ -32,4 +33,4 @@
 (defn api-details
   "Return more exact details after querying OMDB"
   [id]
-  (json-view (omdb/omdb-details id)))
+  (json-view (conj (omdb/omdb-details id) (wikidata/wd-details id))))

@@ -1,5 +1,5 @@
 (ns omdbapi-frontend.remote.omdb
-  (:require [omdbapi-frontend.remote.util :refer [json-request wrap-key-missing-in]]
+  (:require [omdbapi-frontend.remote.util :refer [json-request wrap-key-missing-in memoize-memcached]]
             [omdbapi-frontend.util :refer [select-values]]))
 
 (defn- omdb-request
@@ -34,12 +34,17 @@
        (wrap-response-failed response-map)
        (wrap-omdb)))
 
+; Memoize details but not query, since query is much more dynamic (and has two arguments)
 (defn omdb-query
   "Request JSON from the OMDB Search API and format for returning to the client."
   [query year]
   (format-omdb-query (omdb-request {:s query :y year})))
 
-(defn omdb-details
-  "Request JSON from the OMDB API by IMDB ID and format for returning to the client."
+(defn- omdb-details-raw
+  "Request JSON from the OMDB API by IMDB ID and format for returning to the client. (unmemoized version)"
   [id]
   (format-omdb-details (omdb-request {:i id})))
+
+(def omdb-details
+  "Request JSON from the OMDB API by IMDB ID and format for returning to the client."
+  (memoize-memcached 86400 "omdb-details" omdb-details-raw))

@@ -7,7 +7,8 @@
                  [compojure "1.3.1"]
                  [ring/ring-defaults "0.1.2"]
                  [hiccup "1.0.5"]
-                 [clj-http "1.1.2"]]
+                 [clj-http "1.1.2"]
+                 [clojurewerkz/spyglass "1.0.0"]]
   :plugins [[lein-ring "0.8.13"]]
   :ring {:handler omdbapi-frontend.handler/app}
   :profiles

@@ -45,6 +45,7 @@ To run tests, run:
    a proper library if made any more complex
  * webfonts could probably be better-optimized
  * styling is quite sparse; design takes more time than code for me!
+ * almost certainly could benefit from more tests
 
 ## License
 
